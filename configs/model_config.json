@@ -1,0 +1,72 @@
+{
+  "_comment": "Default model configuration. All values can be overridden via TrainingConfig.",
+
+  "model": {
+    "d_model": 256,
+    "num_heads": 8,
+    "num_layers": 6,
+    "d_ff": null,
+    "n_experts": 4,
+    "n_classes": 2,
+    "max_len": 512,
+    "n_segments": 3,
+    "dropout": 0.1,
+    "classifier_dropout": 0.3,
+    "padding_idx": 0
+  },
+
+  "tokenizer": {
+    "vocab_size": 10000,
+    "max_len": 512,
+    "special_tokens": ["[PAD]", "[UNK]", "[CLS]", "[SEP]", "[MASK]"]
+  },
+
+  "training": {
+    "epochs": 20,
+    "batch_size": 16,
+    "lr": 3e-4,
+    "lr_min": 1e-6,
+    "weight_decay": 0.01,
+    "warmup_ratio": 0.06,
+    "grad_clip": 1.0,
+    "label_smoothing": 0.1,
+    "moe_loss_weight": 0.01,
+    "patience": 5,
+    "fp16": true,
+    "seed": 42
+  },
+
+  "evaluation": {
+    "n_bootstrap": 1000,
+    "ci_level": 0.95,
+    "ece_bins": 15,
+    "metrics": [
+      "accuracy", "f1_macro", "f1_weighted", "f1_micro",
+      "f1_fake", "f1_real",
+      "precision_fake", "precision_real",
+      "recall_fake", "recall_real",
+      "roc_auc", "pr_auc",
+      "mcc", "kappa",
+      "sensitivity", "specificity", "g_mean",
+      "ece", "mce", "brier"
+    ]
+  },
+
+  "ablation": {
+    "epochs_per_config": 5,
+    "configs": [
+      "baseline", "no_rope", "no_swiglu", "no_preln",
+      "no_sparse", "no_moe", "no_cscg", "no_multipool", "full"
+    ]
+  },
+
+  "larger_model": {
+    "_comment": "Use this for stronger baseline matching BERT-base size",
+    "d_model": 512,
+    "num_heads": 8,
+    "num_layers": 12,
+    "n_experts": 4,
+    "batch_size": 8,
+    "lr": 1e-4
+  }
+}
